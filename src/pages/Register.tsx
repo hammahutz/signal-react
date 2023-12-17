@@ -1,17 +1,18 @@
 import React, {useState, useEffect} from "react"
 import { FaUser } from "react-icons/fa"
-const [formData, setFormdata] = useState({
-    name: "",
-    email: "",
-    password: "",
-    reenteredPassword: "",
-})
 
 
 const Register = () => {
+  const [formData, setFormdata] = useState({
+      name: "",
+      email: "",
+      password: "",
+      reenteredPassword: "",
+  })
   return (
     <section className="heading">
-        <h1><FaUser /> Register</h1>
+      <FaUser />
+        <h1>Register</h1>
     </section>
   )
 }
