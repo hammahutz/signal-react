@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Header />
-      <div className="min-h-full px-8 py-10 flex justify-center">
+      <div className="min-h-full px-8 py-10 flex justify-center items-center">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
