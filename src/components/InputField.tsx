@@ -1,21 +1,31 @@
 import React from "react"
 
-interface InputFieldProps {
+interface IInputField {
   name: string
+  index: number,
   value: string
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  placeholder?: string
+  type? : React.HTMLInputTypeAttribute,
 }
 
-const InputField: React.FC<InputFieldProps> = ({ name, value, onChange }) => {
+const InputField: React.FC<IInputField> = ({
+  name,
+  index,
+  type = "text",
+  value = "",
+  placeholder = `Please enter your ${name.toLowerCase()}`,
+  onChange,
+}) => {
   return (
     <>
       <input
-        type="text"
+        type={type}
         className="input input-bordered"
         value={value}
         name={name}
-        id={name}
-        placeholder={`Enter your ${name}`}
+        id={index.toString()}
+        placeholder={placeholder}
         onChange={onChange}
       />
     </>
