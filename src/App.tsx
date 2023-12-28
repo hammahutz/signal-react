@@ -1,5 +1,7 @@
 import React from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/ReactToastify.css'
 
 import Header from "./components/Header"
 
@@ -9,6 +11,7 @@ import Register from "./pages/Register"
 
 function App() {
   return (
+    <>
     <Router>
       <Header />
       <div className="min-h-full px-8 py-10 flex justify-center items-center">
@@ -19,6 +22,8 @@ function App() {
         </Routes>
       </div>
     </Router>
+    <ToastContainer />
+    </>
   )
 }
 
