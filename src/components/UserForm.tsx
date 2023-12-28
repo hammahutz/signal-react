@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react"
-import InputField from "./InputField"
+import React from "react"
+import InputField, { IFormField } from "./InputField"
 
-interface IFormField {
-  name: string
-  placeholder?: string
-  value?: string
-  type?: React.HTMLInputTypeAttribute
-}
+
 
 interface Props {
   children: React.ReactNode
-  formFields: IFormField[]
+  formData: IFormField[]
+  setFormdata: React.Dispatch<React.SetStateAction<IFormField[]>>
+  onSubmit: React.FormEventHandler<HTMLFormElement>
 }
 
-const UserForm = ({ children, formFields }: Props) => {
-  const [formData, setFormdata] = useState(formFields)
-
+const UserForm = ({ children, formData, setFormdata, onSubmit }: Props) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormdata((prevState) => {
       const updatedState = [...prevState]
@@ -23,14 +18,6 @@ const UserForm = ({ children, formFields }: Props) => {
       updatedState[index].value = e.target.value
       return updatedState
     })
-  }
-
-  useEffect(() => {
-    console.log(formData)
-  }, [formData])
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
   }
 
   return (
@@ -42,14 +29,14 @@ const UserForm = ({ children, formFields }: Props) => {
         {children}
       </section>
       <section className="flex flex-col gap-4" onSubmit={onSubmit}>
-        {formData.map((formFieldData, index) => (
+        {formData.map((formField, index) => (
           <InputField
             key={index}
-            name={formFieldData.name}
+            name={formField.name}
             index={index}
             onChange={onChange}
-            value={formFieldData.value || ""}
-            type={formFieldData.type}
+            value={formField.value || ""}
+            type={formField.type}
           />
         ))}
         <button type="submit" className="btn btn-primary">

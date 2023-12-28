@@ -1,17 +1,18 @@
 import React from "react"
 
-interface IInputField {
+export interface IFormField {
   name: string
-  index: number,
-  value: string
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  index?: number,
+  value?: string
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void,
   placeholder?: string
   type? : React.HTMLInputTypeAttribute,
 }
 
-const InputField: React.FC<IInputField> = ({
+
+const InputField: React.FC<IFormField> = ({
   name,
-  index,
+  index=0,
   type = "text",
   value = "",
   placeholder = `Please enter your ${name.toLowerCase()}`,

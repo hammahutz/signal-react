@@ -1,5 +1,6 @@
 import React from "react"
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
+import { GiStairsGoal } from "react-icons/gi"
 import { Link } from "react-router-dom"
 
 const Header = () => {
@@ -8,7 +9,7 @@ const Header = () => {
       <div className="navbar bg-neutral text-neutral-content">
         <div className="navbar-start">
           <Link className="btn btn-primary text-xl" to="/">
-            GoalSetter
+            GoalSetter <GiStairsGoal />
           </Link>
         </div>
         <div className="navbar-end">

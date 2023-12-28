@@ -1,14 +1,13 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit"
+import {authSlice} from "../features/auth/authSlice"
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    auth: authSlice.reducer
+  }
 })
 
-export type AppDispatch = typeof store.dispatch
+// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
