@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { FaUser } from "react-icons/fa"
 import { useAppSelector, useAppDispatch } from "../app/hooks"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { RegisterUserData, register, reset } from "../features/auth/authSlice"
-import { addForm, isSubmitted, removeForm } from "../features/form/formSlice"
+import { isSubmitted } from "../features/form/formSlice"
 import { IInputField } from "../components/InputField"
 import UserForm from "../components/UserForm"
 import Spinner from "../components/Spinner"
 
-const Register = () => {
+const Register: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const authState = useAppSelector((state) => state.auth)
@@ -64,9 +64,11 @@ const Register = () => {
   return (
     <>
       <UserForm inputFields={userFields}>
-        <FaUser />
-        <h1>Register</h1>
-        <p>Please create an account</p>
+        <h1 className="flex gap-4 text-4xl">
+          <FaUser />
+          Register
+        </h1>
+        <p className="flex  gap-4 text-xl">Create an account and set goals!</p>
       </UserForm>
     </>
   )

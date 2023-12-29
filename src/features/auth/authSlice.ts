@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import authService from "./authService"
-import axios, { AxiosError } from "axios"
+import axios from "axios"
 
 // Get User form localStorage
 const storedUser = localStorage.user

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react"
+import React from "react"
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
@@ -9,7 +9,7 @@ const Auth: React.FC = () => {
   const dispatch = useAppDispatch()
   const { user } = useAppSelector((state) => state.auth)
 
-  const onLogout: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const onLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
     dispatch(logout())
     dispatch(reset())
     navigate("/")

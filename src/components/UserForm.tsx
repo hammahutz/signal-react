@@ -38,7 +38,7 @@ const UserForm: React.FC<Props> = ({ children, inputFields }: Props) => {
   return (
     <form
       onSubmit={onSubmit}
-      className="card flex flex-col  p-8 rounded-2xl gap-6 w-96 shadow-xl"
+      className="flex flex-col  p-8  rounded-2xl gap-6 w-96 shadow-2xl"
     >
       <section className="flex flex-col justify-center gap-4 items-center w-full">
         {children}
