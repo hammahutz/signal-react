@@ -1,23 +1,38 @@
-import React from "react"
-import InputField, { IFormField } from "./InputField"
-
+import React, { useEffect } from "react"
+import InputField, { IInputField } from "./InputField"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import {addForm, removeForm, submitData} from "../features/form/formSlice"
 
 
 interface Props {
-  children: React.ReactNode
-  formData: IFormField[]
-  setFormdata: React.Dispatch<React.SetStateAction<IFormField[]>>
-  onSubmit: React.FormEventHandler<HTMLFormElement>
+  children: React.ReactNode,
+  inputFields: IInputField[]
 }
 
-const UserForm = ({ children, formData, setFormdata, onSubmit }: Props) => {
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormdata((prevState) => {
-      const updatedState = [...prevState]
-      const index = parseInt(e.target.id, 10)
-      updatedState[index].value = e.target.value
-      return updatedState
-    })
+const UserForm: React.FC<Props> = ({ children, inputFields }: Props) => {
+  const formState = useAppSelector((state) => state.form)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+
+    dispatch(
+      addForm(inputFields),
+    )
+    return () => {
+      dispatch(removeForm())
+    }
+  }, [])
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = formState.formFields.reduce(
+      (prevValue, currentValue) => ({
+        ...prevValue,
+        [currentValue.name.toLowerCase()]: currentValue.value,
+      }),
+      {},
+    )
+    dispatch(submitData(formData))
   }
 
   return (
@@ -28,15 +43,11 @@ const UserForm = ({ children, formData, setFormdata, onSubmit }: Props) => {
       <section className="flex flex-col justify-center gap-4 items-center w-full">
         {children}
       </section>
-      <section className="flex flex-col gap-4" onSubmit={onSubmit}>
-        {formData.map((formField, index) => (
+      <section className="flex flex-col gap-4" >
+        {formState.formFields.map((_, index) => (
           <InputField
             key={index}
-            name={formField.name}
             index={index}
-            onChange={onChange}
-            value={formField.value || ""}
-            type={formField.type}
           />
         ))}
         <button type="submit" className="btn btn-primary">

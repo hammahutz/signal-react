@@ -1,28 +1,59 @@
-import React, { useState } from "react"
+import React from "react"
+import { useEffect } from "react"
 import { FaSignInAlt } from "react-icons/fa"
-import { IFormField } from "../components/InputField"
+import { IInputField } from "../components/InputField"
 import UserForm from "../components/UserForm"
+import { useAppSelector, useAppDispatch } from "../app/hooks"
+import { isSubmitted } from "../features/form/formSlice"
+import { toast } from "react-toastify"
+import { LoginUserData, login, reset } from "../features/auth/authSlice"
+import { useNavigate } from "react-router-dom"
+import Spinner from "../components/Spinner"
 
+const Login: React.FC = () => {
+  const formState = useAppSelector((state) => state.form)
+  const authState = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-
-const Login = () => {
-  const [formData, setFormdata] = useState([
+  const inputFields = [
     { name: "Email" },
     { name: "Password", type: "password" },
-  ] as IFormField[])
+  ] as IInputField[]
 
-  const onSubmit = (e: React.FormEvent)=> {
-    e.preventDefault();
-    console.log("hello");
+  useEffect(() => {
+    if (!formState.isSubmitted) {
+      return
+    }
+    dispatch(isSubmitted(false))
+    const userData = formState.submitData as LoginUserData
+    if (!userData.email || !userData.password) {
+      toast.error("Please fill the form")
+      return
+    }
+    dispatch(login(userData))
+  }, [formState.submitData])
+
+  useEffect(() => {
+    if (authState.isError) {
+      console.log(authState.message)
+      toast.error(JSON.stringify(authState.message))
+    }
+    if (authState.isSuccess || authState.user) {
+      navigate("/")
+    }
+    dispatch(reset())
+  }, [authState, navigate, dispatch])
+
+  if (authState.isLoading) {
+    return <Spinner />
   }
-
   return (
-    <UserForm
-      formData={formData}
-      setFormdata={setFormdata}
-      onSubmit={onSubmit}
-    >
-      <h1 className="flex gap-4 text-4xl"><FaSignInAlt/>Login</h1>
+    <UserForm inputFields={inputFields}>
+      <h1 className="flex gap-4 text-4xl">
+        <FaSignInAlt />
+        Login
+      </h1>
       <p className="flex  gap-4 text-xl">Login and start setting goals!</p>
     </UserForm>
   )

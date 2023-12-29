@@ -4,12 +4,17 @@ import { useAppSelector, useAppDispatch } from "../app/hooks"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { RegisterUserData, register, reset } from "../features/auth/authSlice"
-import { IFormField } from "../components/InputField"
+import { addForm, isSubmitted, removeForm } from "../features/form/formSlice"
+import { IInputField } from "../components/InputField"
 import UserForm from "../components/UserForm"
 import Spinner from "../components/Spinner"
 
 const Register = () => {
-  const [formData, setFormdata] = useState([
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const authState = useAppSelector((state) => state.auth)
+  const formState = useAppSelector((state) => state.form)
+  const userFields = [
     { name: "Name" },
     { name: "Email" },
     { name: "Password", type: "password" },
@@ -18,38 +23,29 @@ const Register = () => {
       placeholder: "Please reenter your password",
       type: "password",
     },
-  ] as IFormField[])
+  ] as IInputField[]
 
-  const isUserInputValid = (user: RegisterUserData) => {
-    if (!user.email || !user.name || !user.password || !user.passwordreenter) {
+  useEffect(() => {
+    if (!formState.isSubmitted) {
+      return
+    }
+    dispatch(isSubmitted(false))
+    const userData = formState.submitData as RegisterUserData
+    if (
+      !userData.email ||
+      !userData.name ||
+      !userData.password ||
+      !userData.passwordreenter
+    ) {
       toast.error("Please fill the form")
-      return false
+      return
     }
-    if (user.password !== user.passwordreenter) {
+    if (userData.password !== userData.passwordreenter) {
       toast.error("Passwords do not match")
-      return false
+      return
     }
-    return true
-  }
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const userData = formData.reduce(
-      (prevValue, currentValue) => ({
-        ...prevValue,
-        [currentValue.name.toLowerCase()]: currentValue.value,
-      }),
-      {},
-    ) as RegisterUserData
-
-    if (isUserInputValid(userData)) {
-      dispatch(register(userData))
-    }
-  }
-
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const authState = useAppSelector((state) => state.auth)
+    dispatch(register(userData))
+  }, [formState.submitData])
 
   useEffect(() => {
     if (authState.isError) {
@@ -66,11 +62,13 @@ const Register = () => {
     return <Spinner />
   }
   return (
-    <UserForm onSubmit={onSubmit} formData={formData} setFormdata={setFormdata}>
-      <FaUser />
-      <h1>Register</h1>
-      <p>Please create an account</p>
-    </UserForm>
+    <>
+      <UserForm inputFields={userFields}>
+        <FaUser />
+        <h1>Register</h1>
+        <p>Please create an account</p>
+      </UserForm>
+    </>
   )
 }
 

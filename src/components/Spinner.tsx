@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react"
 
-const Spinner = () => {
-  return (
-    <div className="loadingSpinnerContainer">
-        <div className="loadingspinner">Loading...</div>
-    </div>
-  )
-}
+const Spinner: React.FC = () => (
+  <span className="loading loading-spinner loading-lg"></span>
+)
 
 export default Spinner
