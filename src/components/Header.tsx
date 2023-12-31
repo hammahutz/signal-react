@@ -8,7 +8,9 @@ const Header: React.FC = () => {
     <header>
       <div className="navbar bg-neutral text-neutral-content">
         <div className="navbar-start">
-          <Link className="btn btn-primary text-xl" to="/">
+          <Link
+            className="btn btn-primary text-xl"
+            to="/">
             GoalSetter <GiStairsGoal />
           </Link>
         </div>

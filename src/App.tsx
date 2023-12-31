@@ -16,9 +16,18 @@ const App: React.FC = () => {
         <Header />
         <div className="min-h-full px-8 py-10 flex justify-center items-center">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/"
+              element={<Dashboard />}
+            />
+            <Route
+              path="/login"
+              element={<Login />}
+            />
+            <Route
+              path="/register"
+              element={<Register />}
+            />
           </Routes>
         </div>
       </Router>

@@ -32,13 +32,20 @@ const UserForm: React.FC<Props> = ({ children, inputFields }: Props) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col  p-8  rounded-2xl gap-6 w-96 shadow-2xl">
+    <form
+      onSubmit={onSubmit}
+      className="flex flex-col  p-8  rounded-2xl gap-6 w-96 shadow-2xl">
       <section className="flex flex-col justify-center gap-4 items-center w-full">{children}</section>
       <section className="flex flex-col gap-4">
         {formState.formFields.map((_, index) => (
-          <InputField key={index} index={index} />
+          <InputField
+            key={index}
+            index={index}
+          />
         ))}
-        <button type="submit" className="btn btn-primary">
+        <button
+          type="submit"
+          className="btn btn-primary">
           Submit
         </button>
       </section>
