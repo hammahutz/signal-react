@@ -1,43 +1,43 @@
-import axios from "axios"
-import { LoginUserData, RegisterUserData } from "./authSlice"
+import axios from "axios";
+import { LoginUserData, RegisterUserData } from "./authSlice";
 
-const API_URL = "/api/users/"
+const API_URL = "/api/users/";
 
 const register = async (user: RegisterUserData) => {
   const response = await axios.post(API_URL, {
     name: user.name,
     email: user.email,
     password: user.password,
-  })
+  });
 
   if (!response.data) {
-    return Error("coulnt get data")
+    return Error("coulnt get data");
   }
-  localStorage.user = JSON.stringify(response.data)
-  return response.data
-}
+  localStorage.user = JSON.stringify(response.data);
+  return response.data;
+};
 
 const login = async (user: LoginUserData) => {
   const response = await axios.post(`${API_URL}/login/`, {
     email: user.email,
     password: user.password,
-  })
+  });
 
   if (!response.data) {
-    return Error("coulnt get data")
+    return Error("coulnt get data");
   }
-  localStorage.user = JSON.stringify(response.data)
-  return response.data
-}
+  localStorage.user = JSON.stringify(response.data);
+  return response.data;
+};
 
 const logout = async () => {
-  localStorage.user = null
-}
+  localStorage.user = null;
+};
 
 const authService = {
   register,
   login,
-  logout
-}
+  logout,
+};
 
-export default authService
+export default authService;

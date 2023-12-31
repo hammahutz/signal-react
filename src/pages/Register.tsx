@@ -1,19 +1,19 @@
-import React, { useEffect } from "react"
-import { FaUser } from "react-icons/fa"
-import { useAppSelector, useAppDispatch } from "../app/hooks"
-import { useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
-import { RegisterUserData, register, reset } from "../features/auth/authSlice"
-import { isSubmitted } from "../features/form/formSlice"
-import { IInputField } from "../components/InputField"
-import UserForm from "../components/UserForm"
-import Spinner from "../components/Spinner"
+import React, { useEffect } from "react";
+import { FaUser } from "react-icons/fa";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { RegisterUserData, register, reset } from "../features/auth/authSlice";
+import { isSubmitted } from "../features/form/formSlice";
+import { IInputField } from "../components/InputField";
+import UserForm from "../components/UserForm";
+import Spinner from "../components/Spinner";
 
 const Register: React.FC = () => {
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const authState = useAppSelector((state) => state.auth)
-  const formState = useAppSelector((state) => state.form)
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authState = useAppSelector((state) => state.auth);
+  const formState = useAppSelector((state) => state.form);
   const userFields = [
     { name: "Name" },
     { name: "Email" },
@@ -23,43 +23,38 @@ const Register: React.FC = () => {
       placeholder: "Please reenter your password",
       type: "password",
     },
-  ] as IInputField[]
+  ] as IInputField[];
 
   useEffect(() => {
     if (!formState.isSubmitted) {
-      return
+      return;
     }
-    dispatch(isSubmitted(false))
-    const userData = formState.submitData as RegisterUserData
-    if (
-      !userData.email ||
-      !userData.name ||
-      !userData.password ||
-      !userData.passwordreenter
-    ) {
-      toast.error("Please fill the form")
-      return
+    dispatch(isSubmitted(false));
+    const userData = formState.submitData as RegisterUserData;
+    if (!userData.email || !userData.name || !userData.password || !userData.passwordreenter) {
+      toast.error("Please fill the form");
+      return;
     }
     if (userData.password !== userData.passwordreenter) {
-      toast.error("Passwords do not match")
-      return
+      toast.error("Passwords do not match");
+      return;
     }
-    dispatch(register(userData))
-  }, [formState.submitData])
+    dispatch(register(userData));
+  }, [formState.submitData]);
 
   useEffect(() => {
     if (authState.isError) {
-      console.log(authState.message)
-      toast.error(JSON.stringify(authState.message))
+      console.log(authState.message);
+      toast.error(JSON.stringify(authState.message));
     }
     if (authState.isSuccess || authState.user) {
-      navigate("/")
+      navigate("/");
     }
-    dispatch(reset())
-  }, [authState, navigate, dispatch])
+    dispatch(reset());
+  }, [authState, navigate, dispatch]);
 
   if (authState.isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
   return (
     <>
@@ -71,7 +66,7 @@ const Register: React.FC = () => {
         <p className="flex  gap-4 text-xl">Create an account and set goals!</p>
       </UserForm>
     </>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

@@ -1,19 +1,19 @@
-import React from "react"
-import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
-import { Link, useNavigate } from "react-router-dom"
-import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { logout, reset } from "../features/auth/authSlice"
+import React from "react";
+import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { logout, reset } from "../features/auth/authSlice";
 
 const Auth: React.FC = () => {
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const { user } = useAppSelector((state) => state.auth)
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
 
   const onLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
-    dispatch(logout())
-    dispatch(reset())
-    navigate("/")
-  }
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  };
   return (
     <ul className="menu menu-horizontal px-1">
       {user ? (
@@ -39,7 +39,7 @@ const Auth: React.FC = () => {
         </>
       )}
     </ul>
-  )
-}
+  );
+};
 
-export default Auth
+export default Auth;
