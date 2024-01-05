@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch } from "../hooks";
 import { goal } from "../features";
 
 const GoalForm: React.FC = () => {

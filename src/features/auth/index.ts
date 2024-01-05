@@ -103,6 +103,6 @@ const authSlice = createSlice({
   },
 });
 
-export const actions = {...authSlice.actions, login, logout, register};
-export const reducer =  authSlice.reducer;
+export const actions = { ...authSlice.actions, login, logout, register };
+export const reducer = authSlice.reducer;
 export type { RegisterUserData, LoginUserData };

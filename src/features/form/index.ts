@@ -49,6 +49,6 @@ const formSlice = createSlice({
   },
 });
 
-export const actions  = {...formSlice.actions};
-export const reducer =  formSlice.reducer;
+export const actions = { ...formSlice.actions };
+export const reducer = formSlice.reducer;
 export type { IndexValuePair };

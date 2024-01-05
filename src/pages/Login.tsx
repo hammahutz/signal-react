@@ -11,11 +11,10 @@ const Login: React.FC = () => {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {isFormSubmitted} = form.actions
-  const {login, reset} = auth.actions
+  const { isFormSubmitted } = form.actions;
+  const { login, reset } = auth.actions;
 
   const inputFields = [{ name: "Email" }, { name: "Password", type: "password" }] as IInputField[];
-
 
   useEffect(() => {
     if (!formState.isSubmitted) {

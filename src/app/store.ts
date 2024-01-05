@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import * as slices from "../features"
+import * as slices from "../features";
 
 export const store = configureStore({
   reducer: {
     auth: slices.auth.reducer,
     form: slices.form.reducer,
-    goal: slices.goal.reducer
+    goal: slices.goal.reducer,
   },
 });
 
