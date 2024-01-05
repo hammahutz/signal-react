@@ -18,7 +18,9 @@ const InputField: React.FC<Props> = ({ index }) => {
   const [input, setInput] = useState({
     ...formState.formFields[index],
     value: "",
-    placeholder: formState.formFields[index].placeholder ?? `Please enter ${formState.formFields[index].name}`,
+    placeholder:
+      formState.formFields[index].placeholder ??
+      `Please enter your ${formState.formFields[index].name.toLocaleLowerCase()}`,
     type: formState.formFields[index].type ?? "text",
   });
   const dispatch = useAppDispatch();
@@ -36,15 +38,20 @@ const InputField: React.FC<Props> = ({ index }) => {
 
   return (
     <>
-      <input
-        type={input.type}
-        className="input input-bordered"
-        value={input.value}
-        name={input.name}
-        id={index.toString()}
-        placeholder={input.placeholder}
-        onChange={onChange}
-      />
+      <label className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">{input.name}</span>
+        </div>
+        <input
+          type={input.type}
+          className="input input-bordered"
+          value={input.value}
+          name={input.name}
+          id={index.toString()}
+          placeholder={input.placeholder}
+          onChange={onChange}
+        />
+      </label>
     </>
   );
 };

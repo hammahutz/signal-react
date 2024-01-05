@@ -12,7 +12,7 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {isFormSubmitted} = form.actions
-  const {login, logout, reset} = auth.actions
+  const {login, reset} = auth.actions
 
   const inputFields = [{ name: "Email" }, { name: "Password", type: "password" }] as IInputField[];
 

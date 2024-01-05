@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./service";
+import authService from "./authService";
 import axios from "axios";
 
 // Get User form localStorage
@@ -10,6 +10,7 @@ interface RegisterUserData {
   email: string;
   password: string;
   passwordreenter: string;
+  token: string;
 }
 
 interface LoginUserData {
