@@ -1,11 +1,10 @@
-import { authSlice } from "./auth/authSlice";
-import { formSlice } from "./form/formSlice";
-import { goalSlice } from "./goals/goalSlice";
+import * as auth from "./auth";
+import * as form from "./form";
+import * as goal from "./goal";
 
-const reducers = {
-  auth: authSlice.reducer,
-  form: formSlice.reducer,
-  goal: goalSlice.reducer,
-};
+import type { RegisterUserData, LoginUserData } from "./auth";
+import { IndexValuePair } from "./form";
+import { IGoalState } from "./goal";
 
-export { reducers };
+export { auth, form, goal };
+export type { RegisterUserData, LoginUserData, IndexValuePair, IGoalState };

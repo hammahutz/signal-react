@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
 interface IGoalState {
   goals: [];
   isError: boolean;
@@ -14,13 +15,14 @@ const initialState: IGoalState = {
   message: "",
 };
 
-export const goalSlice = createSlice({
+const goalSlice = createSlice({
   name: "goal",
   initialState,
   reducers: {
-    reset: () => initialState,
+    resetGoals: () => initialState,
   },
 });
 
-export const { reset } = goalSlice.actions;
-export default goalSlice.reducer;
+export const actions = { ...goalSlice.actions };
+export const reducer = goalSlice.reducer;
+export type { IGoalState };

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import InputField, { IInputField } from "./InputField";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { addForm, removeForm, submitData } from "../features/form/formSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { form } from "../features";
 
 interface Props {
   children: React.ReactNode;
@@ -11,6 +11,7 @@ interface Props {
 const UserForm: React.FC<Props> = ({ children, inputFields }: Props) => {
   const formState = useAppSelector((state) => state.form);
   const dispatch = useAppDispatch();
+  const { addForm, removeForm, submitForm } = form.actions;
 
   useEffect(() => {
     dispatch(addForm(inputFields));
@@ -28,7 +29,7 @@ const UserForm: React.FC<Props> = ({ children, inputFields }: Props) => {
       }),
       {}
     );
-    dispatch(submitData(formData));
+    dispatch(submitForm(formData));
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { setValue } from "../features/form/formSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { form } from "../features";
 
 export interface IInputField {
   name: string;
@@ -22,10 +22,11 @@ const InputField: React.FC<Props> = ({ index }) => {
     type: formState.formFields[index].type ?? "text",
   });
   const dispatch = useAppDispatch();
+  const { setFormValue } = form.actions;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    dispatch(setValue({ index, value: value }));
+    dispatch(setFormValue({ index, value: value }));
     setInput((prevState) => {
       const newState = prevState;
       newState.value = value;

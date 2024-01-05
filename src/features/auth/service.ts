@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginUserData, RegisterUserData } from "./authSlice";
+import { LoginUserData, RegisterUserData } from ".";
 
 const API_URL = "/api/users/";
 
@@ -34,10 +34,4 @@ const logout = async () => {
   localStorage.user = null;
 };
 
-const authService = {
-  register,
-  login,
-  logout,
-};
-
-export default authService;
+export default { register, login, logout };

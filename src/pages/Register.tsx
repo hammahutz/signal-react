@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { FaUser } from "react-icons/fa";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { useAppSelector, useAppDispatch } from "../hooks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { RegisterUserData, register, reset } from "../features/auth/authSlice";
-import { isSubmitted } from "../features/form/formSlice";
+import { RegisterUserData, auth, form } from "../features";
 import { IInputField } from "../components/InputField";
 import UserForm from "../components/UserForm";
 import Spinner from "../components/Spinner";
@@ -14,6 +13,9 @@ const Register: React.FC = () => {
   const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.auth);
   const formState = useAppSelector((state) => state.form);
+  const { isFormSubmitted } = form.actions;
+  const { register, reset } = auth.actions;
+
   const userFields = [
     { name: "Name" },
     { name: "Email" },
@@ -29,7 +31,7 @@ const Register: React.FC = () => {
     if (!formState.isSubmitted) {
       return;
     }
-    dispatch(isSubmitted(false));
+    dispatch(isFormSubmitted(false));
     const userData = formState.submitData as RegisterUserData;
     if (!userData.email || !userData.name || !userData.password || !userData.passwordreenter) {
       toast.error("Please fill the form");

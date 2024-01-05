@@ -1,11 +1,11 @@
 import React from "react";
-import { Protect } from "../components";
+import { AuthProvider } from "../components";
 
 const Dashboard: React.FC = () => {
   return (
-    <Protect>
+    <AuthProvider>
       <h1>Dash</h1>
-    </Protect>
+    </AuthProvider>
   );
 };
 

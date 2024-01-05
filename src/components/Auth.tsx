@@ -1,13 +1,14 @@
 import React from "react";
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { logout, reset } from "../features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { auth } from "../features";
 
 const Auth: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+  const { logout, reset } = auth.actions;
 
   const onLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
     dispatch(logout());

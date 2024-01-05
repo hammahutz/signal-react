@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector } from ".";
 import { useEffect } from "react";
 
 const useLogin = () => {

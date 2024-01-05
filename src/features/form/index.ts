@@ -9,7 +9,7 @@ interface formState {
   isSubmitted: boolean;
 }
 
-export interface IndexValuePair {
+interface IndexValuePair {
   index: number;
   value: string;
 }
@@ -20,7 +20,7 @@ const initialState: formState = {
   isSubmitted: false,
 };
 
-export const formSlice = createSlice({
+const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
@@ -32,22 +32,23 @@ export const formSlice = createSlice({
       state.submitData = {};
       state.isSubmitted = false;
     },
-    setValue: (state, action: PayloadAction<IndexValuePair>) => {
+    setFormValue: (state, action: PayloadAction<IndexValuePair>) => {
       const { index, value } = action.payload;
       const newState = [...state.formFields];
       newState[index].value = value;
       state.formFields = newState;
     },
-    submitData: (state, action: PayloadAction<object>) => {
+    submitForm: (state, action: PayloadAction<object>) => {
       const data = action.payload;
       state.submitData = data;
       state.isSubmitted = true;
     },
-    isSubmitted: (state, action: PayloadAction<boolean>) => {
+    isFormSubmitted: (state, action: PayloadAction<boolean>) => {
       state.isSubmitted = action.payload;
     },
   },
 });
 
-export const { addForm, removeForm, setValue, submitData, isSubmitted } = formSlice.actions;
-export default formSlice.reducer;
+export const actions  = {...formSlice.actions};
+export const reducer =  formSlice.reducer;
+export type { IndexValuePair };

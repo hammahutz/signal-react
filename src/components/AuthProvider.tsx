@@ -5,9 +5,9 @@ interface Prop {
   children: React.ReactNode;
 }
 
-const Protect: React.FC<Prop> = ({ children }) => {
+const AuthProvider: React.FC<Prop> = ({ children }) => {
   useLogin();
   return <>{children}</>;
 };
 
-export default Protect;
+export default AuthProvider;

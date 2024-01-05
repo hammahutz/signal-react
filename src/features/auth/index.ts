@@ -1,18 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./authService";
+import authService from "./service";
 import axios from "axios";
 
 // Get User form localStorage
 const storedUser = localStorage.user;
 
-export interface RegisterUserData {
+interface RegisterUserData {
   name: string;
   email: string;
   password: string;
   passwordreenter: string;
 }
 
-export interface LoginUserData {
+interface LoginUserData {
   email: string;
   password: string;
 }
@@ -33,7 +33,7 @@ const initialState: AutState = {
   message: "",
 };
 
-export const register = createAsyncThunk("auth/register", async (user: RegisterUserData, thunkAPI) => {
+const register = createAsyncThunk("auth/register", async (user: RegisterUserData, thunkAPI) => {
   try {
     return await authService.register(user);
   } catch (error) {
@@ -41,7 +41,7 @@ export const register = createAsyncThunk("auth/register", async (user: RegisterU
   }
 });
 
-export const login = createAsyncThunk("auth/login", async (user: LoginUserData, thunkAPI) => {
+const login = createAsyncThunk("auth/login", async (user: LoginUserData, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
@@ -49,11 +49,11 @@ export const login = createAsyncThunk("auth/login", async (user: LoginUserData, 
   }
 });
 
-export const logout = createAsyncThunk("auth/logout", async () => {
+const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
 });
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -102,5 +102,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset } = authSlice.actions;
-export default authSlice.reducer;
+export const actions = {...authSlice.actions, login, logout, register};
+export const reducer =  authSlice.reducer;
+export type { RegisterUserData, LoginUserData };
