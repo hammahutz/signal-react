@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { goal } from "../features";
 
 const GoalForm: React.FC = () => {
   const [text, setText] = useState("");
+  const { goals } = useAppSelector((state) => state.goal);
   const dispatch = useAppDispatch();
-  const { createGoal } = goal.actions;
+  const { createGoal, getGoals } = goal.actions;
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,6 +16,7 @@ const GoalForm: React.FC = () => {
   };
 
   return (
+    <>
     <form onSubmit={onSubmit}>
       <label className="form-control w-full max-w-xs">
         <div className="label">
@@ -34,6 +36,10 @@ const GoalForm: React.FC = () => {
         Add
       </button>
     </form>
+    {goals.length > 0 ? (<>{goals.map((goal) => (
+      <div key={goal._id}>{goal.text}</div>
+    ))}</>) : (<h3>You hawent enter any goals</h3>) }
+    </>
   );
 };
 

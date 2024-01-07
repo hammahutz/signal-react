@@ -3,13 +3,21 @@ import axios from "axios";
 import goalService from "./goalService";
 import { RootState } from "../../app/store";
 
+interface IGoal {
+  _id: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface IGoalState {
-  goals: string[];
+  goals: IGoal[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
   message: string;
 }
+
 const initialState: IGoalState = {
   goals: [],
   isError: false,
@@ -18,9 +26,9 @@ const initialState: IGoalState = {
   message: "",
 };
 
-const getGoals = createAsyncThunk<string[] | Error, string, { state: RootState }>(
+const getGoals = createAsyncThunk<IGoal[] | Error, undefined, { state: RootState }>(
   "goal/get",
-  async (_: string, thunkAPI) => {
+  async (_: undefined, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user?.token;
       if (!token) {
@@ -33,7 +41,7 @@ const getGoals = createAsyncThunk<string[] | Error, string, { state: RootState }
   }
 );
 
-const createGoal = createAsyncThunk<string | Error, string, { state: RootState }>(
+const createGoal = createAsyncThunk<IGoal | Error, string, { state: RootState }>(
   "goal/create",
   async (text: string, thunkAPI) => {
     try {
@@ -73,11 +81,11 @@ const goalSlice = createSlice({
           state.goals = action.payload;
         }
       })
-      // .addCase(getGoals.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.isError = true;
-      //   state.message = JSON.stringify(action.payload);
-      // })
+      .addCase(getGoals.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = JSON.stringify(action.payload);
+      })
       .addCase(createGoal.pending, (state) => {
         state.isLoading = true;
         state.isSuccess = false;
@@ -88,7 +96,7 @@ const goalSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
 
-        const goal = action.payload as string;
+        const goal = action.payload as IGoal;
         state.goals.push(goal);
       })
       .addCase(createGoal.rejected, (state, action) => {
@@ -99,6 +107,6 @@ const goalSlice = createSlice({
   },
 });
 
-export const actions = { ...goalSlice.actions, createGoal };
+export const actions = { ...goalSlice.actions, createGoal, getGoals };
 export const reducer = goalSlice.reducer;
-export type { IGoalState };
+export type { IGoalState, IGoal };

@@ -1,7 +1,8 @@
 import axios from "axios";
 import util from "../../util";
+import { IGoal } from ".";
 
-const API_URL = "/api/goals/";
+const API_URL = "/api/goals";
 
 const getGoals = async (token: string) => {
   const config = util.getTokenHeader(token);
@@ -12,7 +13,7 @@ const getGoals = async (token: string) => {
     return Error(`Can't get data ${response}`);
   }
 
-  return data as string[] | Error;
+  return data as IGoal[] | Error;
 };
 
 const createGoal = async (text: string, token: string) => {
@@ -23,7 +24,7 @@ const createGoal = async (text: string, token: string) => {
   if (!data) {
     return Error(`Can't get data ${response}`);
   }
-  return data as string | Error;
+  return data as IGoal | Error;
 };
 
 export default { createGoal, getGoals };
