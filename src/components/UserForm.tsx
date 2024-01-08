@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import InputField, { IInputField } from "./InputField";
+import InputField from "./InputField";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { form } from "../features";
+import { actions } from "../context";
+import { IInputField } from "../interfaces/form";
 
 interface Props {
   children: React.ReactNode;
@@ -11,7 +12,7 @@ interface Props {
 const UserForm: React.FC<Props> = ({ children, inputFields }: Props) => {
   const formState = useAppSelector((state) => state.form);
   const dispatch = useAppDispatch();
-  const { addForm, removeForm, submitForm } = form.actions;
+  const { addForm, removeForm, submitForm } = actions.form;
 
   useEffect(() => {
     dispatch(addForm(inputFields));

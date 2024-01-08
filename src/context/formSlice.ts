@@ -1,20 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IInputField } from "../../components/InputField";
+import { IFormState, IIndexValuePair, IInputField } from "../interfaces/form";
 
-// Get User form localStorage
-// const storedUser = localStorage.user
-interface formState {
-  formFields: IInputField[];
-  submitData: object;
-  isSubmitted: boolean;
-}
-
-interface IndexValuePair {
-  index: number;
-  value: string;
-}
-
-const initialState: formState = {
+const initialState: IFormState = {
   formFields: [] as IInputField[],
   submitData: {} as object,
   isSubmitted: false,
@@ -32,7 +19,7 @@ const formSlice = createSlice({
       state.submitData = {};
       state.isSubmitted = false;
     },
-    setFormValue: (state, action: PayloadAction<IndexValuePair>) => {
+    setFormValue: (state, action: PayloadAction<IIndexValuePair>) => {
       const { index, value } = action.payload;
       const newState = [...state.formFields];
       newState[index].value = value;
@@ -51,4 +38,3 @@ const formSlice = createSlice({
 
 export const actions = { ...formSlice.actions };
 export const reducer = formSlice.reducer;
-export type { IndexValuePair };

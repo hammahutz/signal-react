@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { form } from "../features";
+import { actions } from "../context";
 
-export interface IInputField {
-  name: string;
-  value?: string;
-  placeholder?: string;
-  type?: React.HTMLInputTypeAttribute;
-}
-
-interface Props {
+type Props = {
   index: number;
-}
+};
 
 const InputField: React.FC<Props> = ({ index }) => {
   const formState = useAppSelector((state) => state.form);
@@ -24,7 +17,7 @@ const InputField: React.FC<Props> = ({ index }) => {
     type: formState.formFields[index].type ?? "text",
   });
   const dispatch = useAppDispatch();
-  const { setFormValue } = form.actions;
+  const { setFormValue } = actions.form;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

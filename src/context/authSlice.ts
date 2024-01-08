@@ -1,40 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authService from "./authService";
+import { authService } from "../services";
 import axios from "axios";
+import { IAutState, ILoginUserData, IRegisterUserData } from "../interfaces/auth";
 
 // Get User form localStorage
 const storedUser = localStorage.user;
 
-interface RegisterUserData {
-  name: string;
-  email: string;
-  password: string;
-  passwordreenter: string;
-  token: string;
-}
-
-interface LoginUserData {
-  email: string;
-  password: string;
-}
-
-interface AutState {
-  user: RegisterUserData | null;
-  isError: boolean;
-  isSuccess: boolean;
-  isLoading: boolean;
-  message: string;
-}
-
-const initialState: AutState = {
-  user: storedUser ? (JSON.parse(storedUser) as RegisterUserData) : null,
+const initialState: IAutState = {
+  user: storedUser ? (JSON.parse(storedUser) as IRegisterUserData) : null,
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-const register = createAsyncThunk("auth/register", async (user: RegisterUserData, thunkAPI) => {
+const register = createAsyncThunk("auth/register", async (user: IRegisterUserData, thunkAPI) => {
   try {
     return await authService.register(user);
   } catch (error) {
@@ -42,7 +22,7 @@ const register = createAsyncThunk("auth/register", async (user: RegisterUserData
   }
 });
 
-const login = createAsyncThunk("auth/login", async (user: LoginUserData, thunkAPI) => {
+const login = createAsyncThunk("auth/login", async (user: ILoginUserData, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
@@ -105,4 +85,3 @@ const authSlice = createSlice({
 
 export const actions = { ...authSlice.actions, login, logout, register };
 export const reducer = authSlice.reducer;
-export type { RegisterUserData, LoginUserData };

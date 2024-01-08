@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AuthProvider, GoalForm, Spinner } from "../components";
 import { useAppSelector, useAppDispatch, useLogin } from "../hooks";
-import { goal } from "../features";
+import { actions } from "../context";
 
 const Dashboard: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const { goals, isError, isLoading, isSuccess, message } = useAppSelector((state) => state.goal);
+  const { isError, isLoading, message } = useAppSelector((state) => state.goal);
   const dispatch = useAppDispatch();
-  const { getGoals, resetGoals } = goal.actions;
+  const { getGoals, resetGoals } = actions.goal;
 
   useLogin();
 
@@ -34,12 +34,10 @@ const Dashboard: React.FC = () => {
           <h1 className="text text-primary">Welcome {user && user.name}!</h1>
           <h2 className="text-2xl">Goals DashBoard</h2>
         </section>
-
         <GoalForm />
       </article>
     </AuthProvider>
   );
-
-   };
+};
 
 export default Dashboard;

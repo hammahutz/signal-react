@@ -1,22 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import goalService from "./goalService";
-import { RootState } from "../../app/store";
-
-interface IGoal {
-  _id: string;
-  text: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface IGoalState {
-  goals: IGoal[];
-  isError: boolean;
-  isSuccess: boolean;
-  isLoading: boolean;
-  message: string;
-}
+import { goalService } from "../services";
+import { RootState } from "../app/store";
+import { IGoal, IGoalState } from "../interfaces/goal";
 
 const initialState: IGoalState = {
   goals: [],
@@ -109,4 +95,3 @@ const goalSlice = createSlice({
 
 export const actions = { ...goalSlice.actions, createGoal, getGoals };
 export const reducer = goalSlice.reducer;
-export type { IGoalState, IGoal };

@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
 import { FaSignInAlt } from "react-icons/fa";
 import { useAppSelector, useAppDispatch } from "../hooks";
-import { form, auth, LoginUserData } from "../features";
+import { actions } from "../context";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Spinner, UserForm, IInputField } from "../components";
+import { Spinner, UserForm } from "../components";
+import { ILoginUserData } from "../interfaces/auth";
+import { IInputField } from "../interfaces/form";
 
 const Login: React.FC = () => {
   const formState = useAppSelector((state) => state.form);
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isFormSubmitted } = form.actions;
-  const { login, reset } = auth.actions;
+  const { isFormSubmitted } = actions.form;
+  const { login, reset } = actions.auth;
 
   const inputFields = [{ name: "Email" }, { name: "Password", type: "password" }] as IInputField[];
 
@@ -21,7 +23,7 @@ const Login: React.FC = () => {
       return;
     }
     dispatch(isFormSubmitted(false));
-    const userData = formState.submitData as LoginUserData;
+    const userData = formState.submitData as ILoginUserData;
     if (!userData.email || !userData.password) {
       toast.error("Please fill the form");
       return;
