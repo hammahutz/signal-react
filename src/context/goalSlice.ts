@@ -41,6 +41,21 @@ const createGoal = createAsyncThunk<IGoal | Error, string, { state: RootState }>
   }
 );
 
+const deleteGoal = createAsyncThunk<string| Error, string, { state: RootState }>(
+  "goal/delete",
+  async (id: string, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user?.token;
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token");
+      }
+      return await goalService.deleteGoal(id, token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(axios.isAxiosError(error) ? error : error);
+    }
+  }
+);
+
 const goalSlice = createSlice({
   name: "goal",
   initialState,
@@ -69,7 +84,7 @@ const goalSlice = createSlice({
       .addCase(getGoals.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = JSON.stringify(action.payload);
+        state.message = JSON.stringify(action.payload as Error);
       })
       .addCase(createGoal.pending, (state) => {
         state.isLoading = true;
@@ -87,10 +102,30 @@ const goalSlice = createSlice({
       .addCase(createGoal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = JSON.stringify(action.payload);
+        state.message = JSON.stringify(action.payload as Error);
+      })
+      .addCase(deleteGoal.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+      })
+      .addCase(deleteGoal.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+
+        console.log(action.payload);
+
+
+        state.goals = state.goals.filter((goal) => goal._id != action.payload);
+      })
+      .addCase(deleteGoal.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = JSON.stringify(action.payload as Error);
       });
   },
 });
 
-export const actions = { ...goalSlice.actions, createGoal, getGoals };
+export const actions = { ...goalSlice.actions, createGoal, getGoals, deleteGoal };
 export const reducer = goalSlice.reducer;

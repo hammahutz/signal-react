@@ -26,3 +26,20 @@ export const createGoal = async (text: string, token: string) => {
   }
   return data as IGoal | Error;
 };
+
+export const deleteGoal = async (id: string, token: string) => {
+  const config = util.getTokenHeader(token);
+
+  const deleteUrl = `${API_URL}/${id}`;
+  const response = await axios.delete(deleteUrl, config);
+  const { data } = response;
+
+  console.log(deleteUrl)
+  console.log(data);
+
+  if (!data) {
+    return Error(`Can't get data ${response}`);
+  }
+
+  return data.id as string | Error;
+};

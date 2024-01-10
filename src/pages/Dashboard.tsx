@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { AuthProvider, GoalForm, Spinner } from "../components";
 import { useAppSelector, useAppDispatch, useLogin } from "../hooks";
 import { actions } from "../context";
+import Goals from "../components/Goals";
 
 const Dashboard: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -34,7 +35,7 @@ const Dashboard: React.FC = () => {
           <h1 className="text text-primary">Welcome {user && user.name}!</h1>
           <h2 className="text-2xl">Goals DashBoard</h2>
         </section>
-        <GoalForm />
+        <Goals />
       </article>
     </AuthProvider>
   );

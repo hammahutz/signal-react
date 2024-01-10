@@ -4,7 +4,6 @@ import { actions } from "../context";
 
 const GoalForm: React.FC = () => {
   const [text, setText] = useState("");
-  const { goals } = useAppSelector((state) => state.goal);
   const dispatch = useAppDispatch();
   const { createGoal } = actions.goal;
 
@@ -36,15 +35,7 @@ const GoalForm: React.FC = () => {
           Add
         </button>
       </form>
-      {goals.length > 0 ? (
-        <>
-          {goals.map((goal) => (
-            <div key={goal._id}>{goal.text}</div>
-          ))}
-        </>
-      ) : (
-        <h3>You have not entered any goals ♥</h3>
-      )}
+
     </>
   );
 };

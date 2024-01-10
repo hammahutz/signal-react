@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 const App: React.FC = () => {
-  console.log(import.meta.env.MODE);
+  console.log(import.meta.env.VITE_TEST);
 
   return (
     <>
