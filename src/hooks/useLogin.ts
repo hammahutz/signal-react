@@ -13,4 +13,4 @@ const useLogin = () => {
   }, [user, navigate]);
 };
 
-export default useLogin;
+export { useLogin };

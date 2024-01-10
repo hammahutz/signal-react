@@ -1,7 +1,7 @@
 import React from "react";
 import { GiStairsGoal } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import Auth from "./Auth";
+import { Auth } from ".";
 
 const Header: React.FC = () => {
   return (

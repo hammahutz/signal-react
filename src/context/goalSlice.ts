@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { goalService } from "../services";
-import { RootState } from "../app/store";
-import { IGoal, IGoalState } from "../interfaces/goal";
+import { RootState, IGoal, IGoalState } from "../interfaces";
 
 const initialState: IGoalState = {
   goals: [],

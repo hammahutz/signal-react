@@ -4,10 +4,8 @@ import { useAppSelector, useAppDispatch } from "../hooks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { actions } from "../context";
-import UserForm from "../components/UserForm";
-import Spinner from "../components/Spinner";
-import { IInputField } from "../interfaces/form";
-import { IRegisterUserData } from "../interfaces/auth";
+import { UserForm, Spinner } from "../components";
+import { IInputField, IRegisterUserData } from "../interfaces";
 
 const Register: React.FC = () => {
   const navigate = useNavigate();

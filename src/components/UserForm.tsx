@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import InputField from "./InputField";
+import { InputField } from ".";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { actions } from "../context";
-import { IInputField } from "../interfaces/form";
+import { IInputField } from "../interfaces";
 
 interface Props {
   children: React.ReactNode;
@@ -55,4 +55,4 @@ const UserForm: React.FC<Props> = ({ children, inputFields }: Props) => {
   );
 };
 
-export default UserForm;
+export { UserForm };

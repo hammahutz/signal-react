@@ -1,5 +1,3 @@
-// Get User form localStorage
-// const storedUser = localStorage.user
 export interface IFormState {
   formFields: IInputField[];
   submitData: object;

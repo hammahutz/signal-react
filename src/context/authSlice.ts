@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "../services";
+import { IAutState, ILoginUserData, IRegisterUserData } from "../interfaces";
 import axios from "axios";
-import { IAutState, ILoginUserData, IRegisterUserData } from "../interfaces/auth";
 
 // Get User form localStorage
 const storedUser = localStorage.user;

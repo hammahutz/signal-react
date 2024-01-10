@@ -1,6 +1,6 @@
 import axios from "axios";
 import util from "../utils";
-import { IGoal } from "../interfaces/goal";
+import { IGoal } from "../interfaces";
 
 const API_URL = "/api/goals";
 

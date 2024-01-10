@@ -49,4 +49,4 @@ const GoalForm: React.FC = () => {
   );
 };
 
-export default GoalForm;
+export { GoalForm };

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFormState, IIndexValuePair, IInputField } from "../interfaces/form";
+import { IFormState, IIndexValuePair, IInputField } from "../interfaces";
 
 const initialState: IFormState = {
   formFields: [] as IInputField[],

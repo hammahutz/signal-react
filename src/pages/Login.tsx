@@ -5,8 +5,7 @@ import { actions } from "../context";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Spinner, UserForm } from "../components";
-import { ILoginUserData } from "../interfaces/auth";
-import { IInputField } from "../interfaces/form";
+import { ILoginUserData, IInputField } from "../interfaces";
 
 const Login: React.FC = () => {
   const formState = useAppSelector((state) => state.form);

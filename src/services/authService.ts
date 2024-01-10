@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IRegisterUserData, ILoginUserData } from "../interfaces/auth";
+import { IRegisterUserData, ILoginUserData } from "../interfaces";
 
 const API_URL = "/api/users/";
 
