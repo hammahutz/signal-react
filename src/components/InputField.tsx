@@ -49,4 +49,4 @@ const InputField: React.FC<Props> = ({ index }) => {
   );
 };
 
-export { InputField };
+export default InputField;

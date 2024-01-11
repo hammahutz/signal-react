@@ -10,4 +10,4 @@ const AuthProvider: React.FC<Prop> = ({ children }) => {
   return <>{children}</>;
 };
 
-export { AuthProvider };
+export default AuthProvider ;

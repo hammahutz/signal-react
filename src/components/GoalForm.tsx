@@ -16,21 +16,21 @@ const GoalForm: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">What is your name?</span>
+            <span className="label-text">What is your goal ☺</span>
           </div>
           <input
             type="text"
-            placeholder="Type your goal here"
+            placeholder="Type your goal here!"
             className="input input-bordered w-full max-w-xs"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
         </label>
         <button
-          className="btn"
+          className="btn btn-primary"
           type="submit">
           Add
         </button>
@@ -40,4 +40,4 @@ const GoalForm: React.FC = () => {
   );
 };
 
-export { GoalForm };
+export default  GoalForm ;

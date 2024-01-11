@@ -1,14 +1,12 @@
 import React from "react";
 import { useAppSelector } from "../hooks";
-import { GoalItem } from "./GoalItem";
-import { GoalForm } from ".";
+import { GoalForm, GoalItem } from ".";
 
-const Goals: React.FC = () => {
+const GoalList: React.FC = () => {
   const { goals } = useAppSelector((state) => state.goal);
   return (
     <div>
-      <GoalForm />
-      <div>
+      <div className="flex flex-col gap-4">
         {goals.length > 0 ? (
           <>
             {goals.map((goal, index) => (
@@ -26,4 +24,4 @@ const Goals: React.FC = () => {
   );
 };
 
-export default Goals;
+export default GoalList;

@@ -55,4 +55,4 @@ const UserForm: React.FC<Props> = ({ children, inputFields }: Props) => {
   );
 };
 
-export { UserForm };
+export default UserForm;
