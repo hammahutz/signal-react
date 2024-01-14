@@ -56,6 +56,21 @@ const deleteGoal = createAsyncThunk<string| Error, string, { state: RootState }>
   }
 );
 
+const toggleCompletion = createAsyncThunk<string| Error, string, { state: RootState }>(
+  "goal/setStatus",
+  async (id: string, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user?.token;
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token");
+      }
+      return await goalService.setGoalStatus(id, token, true);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(axios.isAxiosError(error) ? error : error);
+    }
+  }
+);
+
 const goalSlice = createSlice({
   name: "goal",
   initialState,
@@ -95,7 +110,6 @@ const goalSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-
         const goal = action.payload as IGoal;
         state.goals.push(goal);
       })
@@ -113,10 +127,7 @@ const goalSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-
         console.log(action.payload);
-
-
         state.goals = state.goals.filter((goal) => goal._id != action.payload);
       })
       .addCase(deleteGoal.rejected, (state, action) => {

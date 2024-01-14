@@ -34,7 +34,23 @@ export const deleteGoal = async (id: string, token: string) => {
   const response = await axios.delete(deleteUrl, config);
   const { data } = response;
 
-  console.log(deleteUrl)
+  console.log(deleteUrl);
+  console.log(data);
+
+  if (!data) {
+    return Error(`Can't get data ${response}`);
+  }
+
+  return data.id as string | Error;
+};
+
+export const setGoalStatus = async (id: string, token: string, isCompleted: boolean) => {
+  const config = util.getTokenHeader(token);
+
+  const toggleUrl = `${API_URL}/status/${id}`;
+  const response = await axios.post(toggleUrl, { isCompleted }, config);
+  const { data } = response;
+
   console.log(data);
 
   if (!data) {

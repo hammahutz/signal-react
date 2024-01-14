@@ -15,8 +15,9 @@ const GoalItem: React.FC<Prop> = ({ goal }) => {
     <>
       <div className="card card-bordered w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="card-title">{goal.text}</h2>
-          <p className="text-xs">Created at {new Date(goal.createdAt).toLocaleString()}</p>
+          <h2 className="card-title line-through text-neutral">{goal.text}</h2>
+          <span className="text-xs">Last updated {new Date(goal.updatedAt).toLocaleString()}</span>
+          <span className="text-xs">Created {new Date(goal.createdAt).toLocaleString()}</span>
           <div className="card-actions justify-end">
             <button className="btn btn-outline btn-success">
               <FaCheck />
