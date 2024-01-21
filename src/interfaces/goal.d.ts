@@ -3,6 +3,7 @@ export interface IGoal {
   text: string;
   createdAt: string;
   updatedAt: string;
+  completeDate?: Date;
 }
 
 export interface IGoalState {
@@ -11,4 +12,9 @@ export interface IGoalState {
   isSuccess: boolean;
   isLoading: boolean;
   message: string;
+}
+
+export interface IGoalStatus {
+  goalId: string,
+  isCompleted: boolean,
 }

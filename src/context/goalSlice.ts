@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { goalService } from "../services";
-import { RootState, IGoal, IGoalState } from "../interfaces";
+import { RootState, IGoal, IGoalState, IGoalStatus } from "../interfaces";
 
 const initialState: IGoalState = {
   goals: [],
@@ -41,7 +41,7 @@ const createGoal = createAsyncThunk<IGoal | Error, string, { state: RootState }>
   }
 );
 
-const deleteGoal = createAsyncThunk<string| Error, string, { state: RootState }>(
+const deleteGoal = createAsyncThunk<string | Error, string, { state: RootState }>(
   "goal/delete",
   async (id: string, thunkAPI) => {
     try {
@@ -56,15 +56,15 @@ const deleteGoal = createAsyncThunk<string| Error, string, { state: RootState }>
   }
 );
 
-const toggleCompletion = createAsyncThunk<string| Error, string, { state: RootState }>(
+const setCompletion = createAsyncThunk<IGoal | Error, IGoalStatus, { state: RootState }>(
   "goal/setStatus",
-  async (id: string, thunkAPI) => {
+  async (goalStatus, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user?.token;
       if (!token) {
         return thunkAPI.rejectWithValue("No token");
       }
-      return await goalService.setGoalStatus(id, token, true);
+      return await goalService.setGoalStatus(goalStatus, token);
     } catch (error) {
       return thunkAPI.rejectWithValue(axios.isAxiosError(error) ? error : error);
     }
@@ -80,7 +80,7 @@ const goalSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getGoals.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isSuccess = false;
         state.isError = false;
       })
@@ -102,7 +102,7 @@ const goalSlice = createSlice({
         state.message = JSON.stringify(action.payload as Error);
       })
       .addCase(createGoal.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isSuccess = false;
         state.isError = false;
       })
@@ -119,7 +119,7 @@ const goalSlice = createSlice({
         state.message = JSON.stringify(action.payload as Error);
       })
       .addCase(deleteGoal.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isSuccess = false;
         state.isError = false;
       })
@@ -134,9 +134,29 @@ const goalSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = JSON.stringify(action.payload as Error);
+      })
+      .addCase(setCompletion.pending, (state) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = false;
+      })
+      .addCase(setCompletion.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+
+        const updateGoal = action.payload as IGoal;
+        const prevGoalIndex = state.goals.findIndex(g => g._id === updateGoal._id)
+
+        state.goals[prevGoalIndex].completeDate = updateGoal.completeDate;
+      })
+      .addCase(setCompletion.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = JSON.stringify(action.payload as Error);
       });
   },
 });
 
-export const actions = { ...goalSlice.actions, createGoal, getGoals, deleteGoal };
+export const actions = { ...goalSlice.actions, createGoal, getGoals, deleteGoal, setCompletion };
 export const reducer = goalSlice.reducer;

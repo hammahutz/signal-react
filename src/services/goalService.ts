@@ -1,6 +1,6 @@
 import axios from "axios";
 import util from "../utils";
-import { IGoal } from "../interfaces";
+import { IGoal, IGoalStatus } from "../interfaces";
 
 const API_URL = "/api/goals";
 
@@ -44,11 +44,13 @@ export const deleteGoal = async (id: string, token: string) => {
   return data.id as string | Error;
 };
 
-export const setGoalStatus = async (id: string, token: string, isCompleted: boolean) => {
+export const setGoalStatus = async (status: IGoalStatus, token: string) => {
+  const { goalId, isCompleted } = status;
   const config = util.getTokenHeader(token);
+  const url = `${API_URL}/status/${goalId}`;
+  const payload = JSON.stringify({isCompleted: isCompleted})
 
-  const toggleUrl = `${API_URL}/status/${id}`;
-  const response = await axios.post(toggleUrl, { isCompleted }, config);
+  const response = await axios.patch(url, {isCompleted: isCompleted}, config);
   const { data } = response;
 
   console.log(data);
@@ -57,5 +59,5 @@ export const setGoalStatus = async (id: string, token: string, isCompleted: bool
     return Error(`Can't get data ${response}`);
   }
 
-  return data.id as string | Error;
+  return data as IGoal | Error;
 };
